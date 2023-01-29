@@ -35,14 +35,12 @@ function getAToDo(id) {
         databaseConnection_1.default.query(sql, (error, results) => {
             if (error)
                 reject(error);
-            resolve(results);
+            resolve(JSON.parse(JSON.stringify(results[0])));
+            // resolve(results)
         });
     });
 }
 exports.getAToDo = getAToDo;
-getAToDo(19)
-    .then(i => console.log(i))
-    .catch(error => console.log(error));
 function getAllToDo() {
     return new Promise((resolve, reject) => {
         let sql = "SELECT * FROM todo.to_do;";

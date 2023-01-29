@@ -19,12 +19,11 @@ router.post('/create', async(req: Request, res: Response) => {
         try {
             await addToDo(req.body.item);
             const itemId = await returnItemId();
-            console.log(itemId)
-            // const item = await getAToDo(itemId)
-            // res.status(201).send({
-            //     message : "New item added", 
-            //     item
-            // })
+            const item = await getAToDo(itemId)
+            res.status(201).send({
+                message : "New item added", 
+                item
+            })
         } catch (error) {
             res.send({errno: 101, error})
         }

@@ -23,12 +23,11 @@ exports.router.post('/create', (req, res) => __awaiter(void 0, void 0, void 0, f
         try {
             yield (0, functions_1.addToDo)(req.body.item);
             const itemId = yield (0, functions_1.returnItemId)();
-            console.log(itemId);
-            // const item = await getAToDo(itemId)
-            // res.status(201).send({
-            //     message : "New item added", 
-            //     item
-            // })
+            const item = yield (0, functions_1.getAToDo)(itemId);
+            res.status(201).send({
+                message: "New item added",
+                item
+            });
         }
         catch (error) {
             res.send({ errno: 101, error });

@@ -14,7 +14,7 @@ export function addToDo(item: {item: string}) {
     })
 }
 
-export function returnItemId(){
+export function returnItemId(): Promise<number> {
     return new Promise((resolve, reject) => {
         connection.query("SELECT MAX(id) AS last_entry FROM to_do", (error, result) => {
             if (error) reject(error)
@@ -23,19 +23,16 @@ export function returnItemId(){
     })
 }
 
-export function getAToDo (id: number) {
+export function getAToDo (id: number): Promise<{id: number, items: string, set_date: string}> {
     return new Promise((resolve, reject) => {
         let sql = `SELECT * FROM to_do WHERE id = '${id}';`
         connection.query(sql, (error, results) => {
             if (error) reject(error)
-            resolve(results)
+            resolve(JSON.parse(JSON.stringify(results[0])))
+            // resolve(results)
         })
     })
 }
-
-getAToDo(19)
-    .then(i => console.log(i))
-    .catch(error => console.log(error));
 
 export function getAllToDo () {
     return new Promise((resolve, reject) => {
