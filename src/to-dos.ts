@@ -17,8 +17,19 @@ router.post('/create', async(req: Request, res: Response) => {
         try {
             await addToDo(req.body.item);
             const itemId = await returnItemId();
+            const item = await getAToDo(JSON.parse(JSON.stringify(itemId[0])).last_entry)
+            res.status(201).send({
+                message : "New item added", 
+                item
+            })
         } catch (error) {
-            res.send({errno: 101, message : error.message})
+            res.send({errno: 101, error})
         }
+    }
+    else {
+        res.status(500).send({
+            error:"104" ,
+            message : "Enter item property correctly."
+        })
     }
 })
