@@ -24,7 +24,7 @@ function returnItemId() {
         databaseConnection_1.default.query("SELECT MAX(id) AS last_entry FROM to_do", (error, result) => {
             if (error)
                 reject(error);
-            resolve(result);
+            resolve(JSON.parse(JSON.stringify(result[0])).last_entry);
         });
     });
 }
@@ -40,6 +40,9 @@ function getAToDo(id) {
     });
 }
 exports.getAToDo = getAToDo;
+getAToDo(19)
+    .then(i => console.log(i))
+    .catch(error => console.log(error));
 function getAllToDo() {
     return new Promise((resolve, reject) => {
         let sql = "SELECT * FROM todo.to_do;";

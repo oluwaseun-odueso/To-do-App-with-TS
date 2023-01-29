@@ -4,7 +4,7 @@ import connection from './databaseConnection';
 dotenv.config();
 
 // Functions for operations
-export function addToDo(item: {}) {
+export function addToDo(item: {item: string}) {
     return new Promise((resolve, reject) => {
         let sql = `INSERT INTO to_do (items, set_date) VALUES ('${item}', now())`
         connection.query(sql, (error, results) => {
@@ -18,7 +18,7 @@ export function returnItemId(){
     return new Promise((resolve, reject) => {
         connection.query("SELECT MAX(id) AS last_entry FROM to_do", (error, result) => {
             if (error) reject(error)
-            resolve(result)
+            resolve(JSON.parse(JSON.stringify(result[0])).last_entry)
         })
     })
 }
@@ -32,6 +32,10 @@ export function getAToDo (id: number) {
         })
     })
 }
+
+getAToDo(19)
+    .then(i => console.log(i))
+    .catch(error => console.log(error));
 
 export function getAllToDo () {
     return new Promise((resolve, reject) => {

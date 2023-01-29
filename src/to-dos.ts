@@ -12,16 +12,19 @@ dotenv.config();
 
 export const router = Router();
 
+type createTodo = {item: string}
+
 router.post('/create', async(req: Request, res: Response) => {
     if (req.body.item) {
         try {
             await addToDo(req.body.item);
             const itemId = await returnItemId();
-            const item = await getAToDo(JSON.parse(JSON.stringify(itemId[0])).last_entry)
-            res.status(201).send({
-                message : "New item added", 
-                item
-            })
+            console.log(itemId)
+            // const item = await getAToDo(itemId)
+            // res.status(201).send({
+            //     message : "New item added", 
+            //     item
+            // })
         } catch (error) {
             res.send({errno: 101, error})
         }
