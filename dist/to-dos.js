@@ -40,3 +40,35 @@ exports.router.post('/create', (req, res) => __awaiter(void 0, void 0, void 0, f
         });
     }
 }));
+exports.router.get('/get', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.body.id) {
+        try {
+            const result = yield (0, functions_1.getAToDo)(req.body.id);
+            console.log(result);
+            if (result) {
+                res.status(200).send({ Item: result });
+            }
+            if (result == undefined) {
+                res.status(401).send({
+                    error: "106",
+                    message: "Item id does not exist."
+                });
+            }
+            // else {
+            // res.status(401).send({
+            //     error:"106" ,
+            //     message : "Item id does not exist."
+            // })
+            // }
+        }
+        catch (error) {
+            res.send({ errno: 102, message: error });
+        }
+    }
+    else {
+        res.status(500).send({
+            error: "109",
+            message: "Enter item id property correctly."
+        });
+    }
+}));

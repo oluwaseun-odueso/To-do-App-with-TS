@@ -27,11 +27,41 @@ router.post('/create', async(req: Request, res: Response) => {
         } catch (error) {
             res.send({errno: 101, error})
         }
-    }
-    else {
+    } else {
         res.status(500).send({
             error:"104" ,
             message : "Enter item property correctly."
+        })
+    }
+})
+
+router.get('/get', async(req: Request, res: Response) => {
+    if (req.body.id) {
+        try {
+            const result = await getAToDo(req.body.id)
+            console.log(result)
+            if (result) {
+                res.status(200).send({ Item : result })
+            } 
+            if (result == undefined) {
+                res.status(401).send({
+                    error:"106" ,
+                    message : "Item id does not exist."
+                })
+            }
+            // else {
+                // res.status(401).send({
+                //     error:"106" ,
+                //     message : "Item id does not exist."
+                // })
+            // }
+        } catch (error) {
+            res.send({errno : 102, message : error})
+        }
+    } else {
+        res.status(500).send({
+            error:"109" ,
+            message : "Enter item id property correctly."
         })
     }
 })
