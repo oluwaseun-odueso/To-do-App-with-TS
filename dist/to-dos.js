@@ -79,8 +79,39 @@ exports.router.get('/get_all', (req, res) => __awaiter(void 0, void 0, void 0, f
         else {
             res.status(401).send({ message: "You have no to-do yet." });
         }
+        ;
     }
     catch (error) {
         res.send({ errno: 103, message: error });
+    }
+    ;
+}));
+exports.router.patch('/update', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.body.id && req.body.item) {
+        try {
+            yield (0, functions_1.updateToDo)(req.body.id, req.body.item);
+            const updatedItem = yield (0, functions_1.getAToDo)(req.body.id);
+            if (updatedItem.length == 1) {
+                res.status(201).send({
+                    message: "Item updated!",
+                    Item: updatedItem[0]
+                });
+            }
+            else {
+                res.status(401).send({
+                    message: "Item does not exist!"
+                });
+            }
+        }
+        catch (error) {
+            res.send({ errno: 104, message: error });
+        }
+        ;
+    }
+    else {
+        res.status(500).send({
+            error: "109",
+            message: "All properties must be entered correctly."
+        });
     }
 }));

@@ -44,12 +44,12 @@ export function getAllToDo(): Promise<[Item]> {
     });
 };
 
-export function updateToDo(id: number, item: {}) {
+export function updateToDo(id: number, item: string) {
     return new Promise((resolve, reject) => {
         let sql = `UPDATE to_do SET items = '${item}' WHERE id = ${id};`
         connection.query(sql, (error, results) => {
             if (error) reject(error);
-            resolve(results);
+            resolve(JSON.parse(JSON.stringify(results)));
         });
     });
 };

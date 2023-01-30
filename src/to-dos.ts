@@ -60,13 +60,39 @@ router.get('/get', async(req: Request, res: Response) => {
 
 router.get('/get_all', async(req: Request, res: Response) => {
     try {
-        const result = await getAllToDo()
+        const result = await getAllToDo();
         if (result.length >= 1) {
-            res.status(200).send({"To-do items" : result})
+            res.status(200).send({"To-do items" : result});
         } else {
-            res.status(401).send({message : "You have no to-do yet."})
-        }
+            res.status(401).send({message : "You have no to-do yet."});
+        };
     } catch (error) {
         res.send({errno : 103, message : error})   
+    };
+});
+
+router.patch('/update', async(req: Request, res: Response) => {
+    if (req.body.id && req.body.item) {
+        try {
+            await updateToDo(req.body.id, req.body.item);
+            const updatedItem = await getAToDo(req.body.id)
+            if (updatedItem.length == 1) {
+                res.status(201).send({
+                    message : "Item updated!",
+                    Item: updatedItem[0]
+                })
+            } else {
+                res.status(401).send({
+                    message : "Item does not exist!"
+                })
+            }
+        } catch (error) {
+            res.send({errno : 104, message : error})
+        };
+    } else {
+        res.status(500).send({
+            error:"109" ,
+            message : "All properties must be entered correctly."
+        })
     }
 })
