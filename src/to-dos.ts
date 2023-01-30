@@ -84,8 +84,8 @@ router.patch('/update', async(req: Request, res: Response) => {
             } else {
                 res.status(401).send({
                     message : "Item does not exist!"
-                })
-            }
+                });
+            };
         } catch (error) {
             res.send({errno : 104, message : error})
         };
@@ -93,6 +93,32 @@ router.patch('/update', async(req: Request, res: Response) => {
         res.status(500).send({
             error:"109" ,
             message : "All properties must be entered correctly."
+        });
+    };
+});
+
+router.delete('/delete', async(req: Request, res: Response) => {
+    if (req.body.id) {
+        try {
+            const new_item = await getAToDo(req.body.id)
+            if (new_item.length == 1) {
+                await deleteToDo(req.body.id)
+                res.status(200).send({message : "An item has been deleted."})
+            }
+            else {
+                res.status(401).send({
+                    message : "Item does not exist!"
+                })
+            }
+        }
+        catch (error) {
+            res.send({errno: 105, message : error})
+        }
+    }
+    else {
+        res.status(500).send({
+            error:"104" ,
+            message : "Enter id correctly."
         })
     }
 })

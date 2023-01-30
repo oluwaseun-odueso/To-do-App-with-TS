@@ -44,7 +44,7 @@ export function getAllToDo(): Promise<[Item]> {
     });
 };
 
-export function updateToDo(id: number, item: string) {
+export function updateToDo(id: number, item: string): Promise<{}> {
     return new Promise((resolve, reject) => {
         let sql = `UPDATE to_do SET items = '${item}' WHERE id = ${id};`
         connection.query(sql, (error, results) => {
@@ -54,7 +54,7 @@ export function updateToDo(id: number, item: string) {
     });
 };
 
-export function deleteToDo(id: number) {
+export function deleteToDo(id: number): Promise<{}> {
     return new Promise((resolve, reject) => {
         let sql = `DELETE FROM to_do WHERE id = ${id};`
         connection.query(sql, (error, results) => {

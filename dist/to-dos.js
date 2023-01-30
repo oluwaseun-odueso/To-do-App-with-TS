@@ -102,6 +102,7 @@ exports.router.patch('/update', (req, res) => __awaiter(void 0, void 0, void 0, 
                     message: "Item does not exist!"
                 });
             }
+            ;
         }
         catch (error) {
             res.send({ errno: 104, message: error });
@@ -112,6 +113,32 @@ exports.router.patch('/update', (req, res) => __awaiter(void 0, void 0, void 0, 
         res.status(500).send({
             error: "109",
             message: "All properties must be entered correctly."
+        });
+    }
+    ;
+}));
+exports.router.delete('/delete', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.body.id) {
+        try {
+            const new_item = yield (0, functions_1.getAToDo)(req.body.id);
+            if (new_item.length == 1) {
+                yield (0, functions_1.deleteToDo)(req.body.id);
+                res.status(200).send({ message: "An item has been deleted." });
+            }
+            else {
+                res.status(401).send({
+                    message: "Item does not exist!"
+                });
+            }
+        }
+        catch (error) {
+            res.send({ errno: 105, message: error });
+        }
+    }
+    else {
+        res.status(500).send({
+            error: "104",
+            message: "Enter id correctly."
         });
     }
 }));
