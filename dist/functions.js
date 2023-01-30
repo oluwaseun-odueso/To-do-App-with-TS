@@ -19,6 +19,7 @@ function addToDo(item) {
     });
 }
 exports.addToDo = addToDo;
+;
 function returnItemId() {
     return new Promise((resolve, reject) => {
         databaseConnection_1.default.query("SELECT MAX(id) AS last_entry FROM to_do", (error, result) => {
@@ -29,18 +30,19 @@ function returnItemId() {
     });
 }
 exports.returnItemId = returnItemId;
+;
 function getAToDo(id) {
     return new Promise((resolve, reject) => {
         let sql = `SELECT * FROM to_do WHERE id = '${id}';`;
         databaseConnection_1.default.query(sql, (error, results) => {
             if (error)
                 reject(error);
-            resolve(JSON.parse(JSON.stringify(results[0])));
-            // resolve(results)
+            resolve(JSON.parse(JSON.stringify(results)));
         });
     });
 }
 exports.getAToDo = getAToDo;
+;
 function getAllToDo() {
     return new Promise((resolve, reject) => {
         let sql = "SELECT * FROM todo.to_do;";
@@ -52,6 +54,7 @@ function getAllToDo() {
     });
 }
 exports.getAllToDo = getAllToDo;
+;
 function updateToDo(id, item) {
     return new Promise((resolve, reject) => {
         let sql = `UPDATE to_do SET items = '${item}' WHERE id = ${id};`;
@@ -63,6 +66,7 @@ function updateToDo(id, item) {
     });
 }
 exports.updateToDo = updateToDo;
+;
 function deleteToDo(id) {
     return new Promise((resolve, reject) => {
         let sql = `DELETE FROM to_do WHERE id = ${id};`;
@@ -74,3 +78,4 @@ function deleteToDo(id) {
     });
 }
 exports.deleteToDo = deleteToDo;
+;

@@ -1,5 +1,5 @@
 export type Item = {
     id: number,
-    item: string,
-    date: string
+    items: string,
+    set_date: string
 }
