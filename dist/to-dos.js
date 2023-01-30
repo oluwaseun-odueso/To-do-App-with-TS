@@ -70,3 +70,17 @@ exports.router.get('/get', (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
     ;
 }));
+exports.router.get('/get_all', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield (0, functions_1.getAllToDo)();
+        if (result.length >= 1) {
+            res.status(200).send({ "To-do items": result });
+        }
+        else {
+            res.status(401).send({ message: "You have no to-do yet." });
+        }
+    }
+    catch (error) {
+        res.send({ errno: 103, message: error });
+    }
+}));

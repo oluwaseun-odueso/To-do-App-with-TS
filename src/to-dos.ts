@@ -57,3 +57,16 @@ router.get('/get', async(req: Request, res: Response) => {
         });
     };
 });
+
+router.get('/get_all', async(req: Request, res: Response) => {
+    try {
+        const result = await getAllToDo()
+        if (result.length >= 1) {
+            res.status(200).send({"To-do items" : result})
+        } else {
+            res.status(401).send({message : "You have no to-do yet."})
+        }
+    } catch (error) {
+        res.send({errno : 103, message : error})   
+    }
+})

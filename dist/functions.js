@@ -49,7 +49,7 @@ function getAllToDo() {
         databaseConnection_1.default.query(sql, (error, results) => {
             if (error)
                 reject(error);
-            resolve(results);
+            resolve(JSON.parse(JSON.stringify(results)));
         });
     });
 }
